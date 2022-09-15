@@ -2,7 +2,9 @@
 
 pragma solidity >=0.4.22 <0.9.0;
 
-import "./PriceConverter.sol";
+import "./PriceConvertor.sol";
+
+error Not_Owner();
 
 contract FundMe{
 
@@ -10,22 +12,28 @@ contract FundMe{
 
     address[] public funders; 
     mapping (address => uint256) public fundersAmount;
-    uint256 minimumUsd = 10 * 1e18; // Can Send Minimum 10$
-    address owner;
+    uint256 public constant MINIMUM_USD = 10 * 1e18; // Can Send Minimum 10$
+    // 21,415 Gas - constant
+    // 23,515 Gas - non-constant
+    // 21,415 * 11000000000 = $0.32
+    // 23,515 * 11000000000 = $0.35
+    address immutable i_owner;
 
     constructor(){
-        owner = msg.sender;
+        i_owner = msg.sender;
     }
 
     function fund() public payable{
-        require(msg.value.getConversionRate() >= minimumUsd, "You Need To Spend More Gas...");
+        // Here msg.value will pass as the first parameter in getConversionRate 
+        require(msg.value.getConversionRate() >= MINIMUM_USD, "You Need To Spend More Gas...");
         // 1000000000000000000
         funders.push(msg.sender);
         fundersAmount[msg.sender] += msg.value;
     }
 
     modifier onlyOwner(){
-        require(msg.sender == owner, "You Are Not An Owner...");
+        // require(msg.sender == i_owner, "You Are Not An Owner...");
+        if(msg.sender != i_owner){ revert Not_Owner(); }  // Gas Efficient
         _;
     }
 
@@ -48,4 +56,13 @@ contract FundMe{
         (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
         require(callSuccess, "Error Sending Ethereum");
     }
+
+    receive() external payable {  // Used When Someone Send Transaction Without CallData 
+        fund();
+    }
+
+    fallback() external  payable {  // Used When There Is No receive() function and msg.data is not empty
+        fund();
+    }
+
 }
