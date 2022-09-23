@@ -13,10 +13,9 @@ contract FundMe{
     address[] public funders; 
     mapping (address => uint256) public fundersAmount;
     uint256 public constant MINIMUM_USD = 10 * 1e18; // Can Send Minimum 10$
-    // 21,415 Gas - constant
-    // 23,515 Gas - non-constant
-    // 21,415 * 11000000000 = $0.32
-    // 23,515 * 11000000000 = $0.35
+    // 21,415 Gas - constant => 21,415 * 11000000000 = $0.32
+    // 23,515 Gas - non-constant => 23,515 * 11000000000 = $0.35
+
     address immutable i_owner;
 
     constructor(){
@@ -27,7 +26,7 @@ contract FundMe{
         // Here msg.value will pass as the first parameter in getConversionRate 
         require(msg.value.getConversionRate() >= MINIMUM_USD, "You Need To Spend More Gas...");
         // 1000000000000000000
-        funders.push(msg.sender);
+        checkDuplicate(msg.sender);
         fundersAmount[msg.sender] += msg.value;
     }
 
@@ -35,6 +34,13 @@ contract FundMe{
         // require(msg.sender == i_owner, "You Are Not An Owner...");
         if(msg.sender != i_owner){ revert Not_Owner(); }  // Gas Efficient
         _;
+    }
+    function checkDuplicate(address arr) public {
+        for (uint i = 0; i< funders.length; i++){
+            if (funders[i] != arr){
+                funders.push(arr);
+            }
+        }
     }
 
     function withdraw() public onlyOwner{
@@ -46,13 +52,14 @@ contract FundMe{
         // Three Ways To Send Money
 
         /** 1. Transfer  */
-        //payable(msg.sender).transfer(address(this).balance);
+        // payable(msg.sender).transfer(address(this).balance);
 
         /** 2. Send  */
         // bool sendSuccess = payable(msg.sender).send(address(this).balance);
         // require(sendSuccess, "Sending Failed");
 
-        /** 3. Call (Returns 2 Variables)  => (bool callSuccess, bytes memory data)   */
+        /** 3. Call  */
+        // (Returns 2 Variables)  => (bool callSuccess, bytes memory data) 
         (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
         require(callSuccess, "Error Sending Ethereum");
     }
