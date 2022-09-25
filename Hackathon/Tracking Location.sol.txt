@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract Tracking_Location{
+    
+    struct Package{
+        string pkgName;
+        string senderLocation;
+        string recieverLocation;
+        uint shipmentTime;
+        string recieverName;
+        
+    }
+
+    mapping(string => string) private getSenderLocation;
+    mapping(string => string) private getRecieverLocation;
+    mapping(string => uint) private getTime;
+
+
+    Package[] package;
+
+    string[] pkgList;
+
+    function addRecords(string memory _pkgName, string memory _senderLocation, string memory _recieverLocation, string memory _recieverName)public {
+        package.push(Package(_pkgName, _senderLocation, _recieverLocation, block.timestamp, _recieverName));
+        pkgList.push(_pkgName);
+        getSenderLocation[_pkgName] = _senderLocation;
+        getRecieverLocation[_pkgName] = _recieverLocation;
+        getTime[_pkgName] = block.timestamp;
+    }
+
+    modifier checkPkg(string memory _pkgName){
+        for (uint i=0; i< pkgList.length; i++){
+            require(keccak256(abi.encodePacked(_pkgName)) == keccak256(abi.encodePacked(pkgList[i])), "Package Doesn't Exist...");
+        }
+        _;
+    }
+
+    function updateTime(string memory _pkgName) public checkPkg(_pkgName){
+        getTime[_pkgName] = block.timestamp;
+    }
+
+    function getRecords(string memory _pkgName) public view checkPkg(_pkgName) returns(string memory pkgName, string memory senderLocation, string memory recieverLocation, uint time){
+        return (_pkgName, getSenderLocation[_pkgName], getRecieverLocation[_pkgName], getTime[_pkgName]);
+    }
+}

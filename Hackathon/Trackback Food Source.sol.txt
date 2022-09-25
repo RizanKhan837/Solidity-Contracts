@@ -1,0 +1,47 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract Tracking_Food_Source{
+
+    mapping(string => Recievers) reciever;
+
+    mapping(string => string) private getSenderName;
+    mapping(string => string) private getRecieverName;
+   
+    struct Origin{
+        string companyName;
+        string[] products;
+        address transferTo;
+        string recieverName;
+    }
+
+    modifier checkReciever(string memory _recieverName){
+        for (uint i=0; i< recieverList.length; i++){
+            require(keccak256(abi.encodePacked(_recieverName)) == keccak256(abi.encodePacked(recieverList[i])), "Reciever Doesn't Exist...");
+        }
+        _;
+    }
+
+    string[] recieverList;
+
+    struct Recievers{
+        string name;
+        string sentFrom;
+        string[] products;
+    }
+
+    Origin[] public origins;
+    Recievers[] private recievers;
+
+    function addRecords(string memory _companyName, string[] memory _products, address _transferTo, string memory _recieverName)public {
+        origins.push(Origin(_companyName, _products, _transferTo, _recieverName));
+        recievers.push(Recievers(_recieverName, _companyName, _products));
+        recieverList.push(_recieverName);
+        reciever[_recieverName] = Recievers(_recieverName, _companyName, _products);
+    }
+
+    function getRecords(string memory _name) public view checkReciever(_name) returns(string memory recieverName, string memory senderName){
+        return (getRecieverName[_name], getSenderName[_name]);
+    }
+
+}
