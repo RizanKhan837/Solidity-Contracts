@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract Patient_Data_Management_System{
+
+    mapping(uint => string) status;
+    mapping(uint => Patients) patient;
+
+    address private i_owner;
+
+    struct Patients{
+        string name;
+        string disease;
+        string status;
+    }
+    constructor(){
+        i_owner = msg.sender;
+    }
+
+    modifier onlyOwner(){
+        // require(msg.sender == i_owner, "You Are Not An Owner...");
+        require(msg.sender == i_owner, "You Have Not Access To Database"); // Gas Efficient
+        _;
+    }
+
+    Patients[] private patients;
+
+    function addPatients(string memory _name, string memory _disease, string memory _status, uint _id)public {
+        patients.push(Patients(_name, _disease, _status));
+        patient[_id] = Patients(_name, _disease, _status);
+        status[_id] = _status;
+    }
+
+    function setStatus(uint _id, string memory _status) public onlyOwner{
+        status[_id] = _status;
+    }
+
+    function getStatus(uint _id) public view returns(string memory){
+        return status[_id];
+    }
+
+    function getPatients(uint _id) public view onlyOwner returns(Patients memory){
+        return patients[_id];
+    }
+
+}
