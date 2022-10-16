@@ -3,7 +3,6 @@
 
 pragma solidity ^0.8.0;
 
-
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
  */
@@ -170,11 +169,11 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
      * All two of these values are immutable: they can only be set once during
      * construction.
      */
-    constructor(string memory name_, string memory symbol_, uint8 decimals_) {
+    constructor(string memory name_, string memory symbol_) {
         _name = name_;
         _symbol = symbol_;
-        _decimals = decimals_;
-        _totalSupply = 1000000 * 10 ** _decimals;
+        _decimals = 9;
+        _totalSupply = 10000000 * 10 ** _decimals;
         _balances[msg.sender] = _totalSupply;
         
         emit Transfer(address(0), msg.sender, _totalSupply);
@@ -236,7 +235,10 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
      */
     function transfer(address to, uint256 amount) public virtual override returns (bool) {
         address owner = _msgSender();
-        _transfer(owner, to, amount);
+        uint amountSend = amount/100 * 90;
+        _transfer(owner, to, amountSend);
+        uint amountBurn = amount/100 * 10;
+        _burn(to, amountBurn);
         return true;
     }
 
@@ -387,12 +389,12 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         _beforeTokenTransfer(address(0), account, amount);
 
         _totalSupply += amount;
+        _burn(account, 10);
         unchecked {
             // Overflow not possible: balance + amount is at most totalSupply + amount, which is checked above.
             _balances[account] += amount;
-        }
+        } 
         emit Transfer(address(0), account, amount);
-
         _afterTokenTransfer(address(0), account, amount);
     }
 
