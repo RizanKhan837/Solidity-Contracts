@@ -33,7 +33,6 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ownable, E
 
     function safeMint(address to) public onlyOwner payable{
         require(msg.value >= 1000000000000000 wei, "Not Enough Balance");
-        payable(msg.sender).transfer(address(this).balance);
         _tokenIdCounter.increment();
         uint256 tokenId = _tokenIdCounter.current();
         require(tokenId <= 500, "Can't Mint More Than 500 NFT's");
