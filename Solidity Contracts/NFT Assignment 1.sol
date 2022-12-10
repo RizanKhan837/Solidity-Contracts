@@ -23,11 +23,11 @@ contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ownable, E
         return "https://example.com/metadata";
     }
 
-    function pause() private onlyOwner {
+    function pause() public onlyOwner {
         _pause();
     }
 
-    function unpause() private onlyOwner {
+    function unpause() public onlyOwner {
         _unpause();
     }
 
