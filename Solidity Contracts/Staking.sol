@@ -116,7 +116,7 @@ contract StakeContract{
         _staked[msg.sender].totalClaimed += claimableAmount;
     }
 
-    /* function test(address _user, uint256 _rewardDays) public {
+    function test(address _user, uint256 _rewardDays) public {
         _staked[_user].lastClaimed = block.timestamp - _rewardDays.mul(1 days);
-    } */
+    }
 }
