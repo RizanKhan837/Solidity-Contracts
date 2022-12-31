@@ -6,6 +6,7 @@ contract Todo{
     struct TodoObj{
         uint id; string todoName; string todoDescription;
     }
+    // Event to be emitted when a new task is created
     event TaskCreate(uint, string);
 
     mapping(address => TodoObj[]) todoMap;
