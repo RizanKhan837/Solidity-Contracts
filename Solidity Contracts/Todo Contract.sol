@@ -11,7 +11,8 @@ contract Todo{
     // Mapping to store the todos
     mapping(address => TodoObj[]) todoMap;
     TodoObj[] public todos;
-
+    
+    // Function to add a new todo
     function addTodos(uint _id, string memory _todoText, string memory _todoDescription) public {
         todos.push(TodoObj(_id, _todoText, _todoDescription));
         todoMap[msg.sender] = todos;
