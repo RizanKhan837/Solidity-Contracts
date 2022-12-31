@@ -8,7 +8,7 @@ contract Todo{
     }
     // Event to be emitted when a new task is created
     event TaskCreate(uint, string);
-
+    // Mapping to store the todos
     mapping(address => TodoObj[]) todoMap;
     TodoObj[] public todos;
 
