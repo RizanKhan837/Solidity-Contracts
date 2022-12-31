@@ -11,11 +11,11 @@ import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/draft-ERC721Votes.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-/* library math{
+library math{
     function add(uint256 _a, uint256 _b) internal pure returns(uint256){ 
         return _a + _b;
     }
-} */
+}
 
 contract NFT is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ownable, ERC721Burnable, EIP712, ERC721Votes {
     using Counters for Counters.Counter;
