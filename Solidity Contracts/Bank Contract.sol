@@ -24,6 +24,7 @@ contract Bank{
         uint currentTime = block.timestamp;
         uint difference = currentTime - timestamp[msg.sender];
 
+        // checking the time difference 
         if (difference > 5 && difference <= 6 ) {
             payable(msg.sender).transfer((balances[msg.sender] + (msg.sender.balance * 10) / 100));
         }
