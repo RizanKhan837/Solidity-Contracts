@@ -2,14 +2,14 @@
 
 pragma solidity >=0.4.22 <0.9.0;
 
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+//import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 contract FundMe{
 
     address[] public funders; 
     mapping (address => uint256) public fundersAmount;
     uint256 minimumUsd = 10 * 1e18; // Can Send Minimum 10$
 
-    AggregatorV3Interface priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e);
+   //AggregatorV3Interface priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e);
 
     function fund() public payable{
         require(getConversionRate(msg.value) >= minimumUsd, "You Need To Spend More Gas...");
