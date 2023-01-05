@@ -4,13 +4,13 @@
 string_buf: .space 100
 
 # Declare the file name of the image
-image_name: .asciiz "C:/Users/HP/OneDrive/Steganography_Project/ImageSource/sample3.bmp"
+image_name: .asciiz "C:/Users/HP/OneDrive/Steganography_Project/ImageSource/sampledecoded.bmp"
 
 # Declare the file descriptor for the image file
 image_fd: .word 0
 
 # Declare a buffer to hold the pixel values
-pixel_buf: .space 4000
+pixel_buf: .space 3275520
 
 .text
 
@@ -26,7 +26,7 @@ sw $v0, image_fd # store the file descriptor in image_fd
 li $v0, 14 # system call for read()
 lw $a0, image_fd # file descriptor of image file
 la $a1, pixel_buf # address of buffer to store pixel values
-li $a2, 4000 # number of bytes to read (assuming image is 10x10 pixels)
+li $a2, 3275520 # number of bytes to read (assuming image is 10x10 pixels)
 syscall # read the pixel values from the image file
 
 # Decode the text from the pixel values
