@@ -115,7 +115,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI{
     /**
      * @dev See {IERC1155-safeTransferFrom}.
      */
-    function safeTransferFrom(
+    function safeTransferFrom( // transfer krny ka function
         address from,
         address to,
         uint256 id,
@@ -132,7 +132,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI{
     /**
      * @dev See {IERC1155-safeBatchTransferFrom}.
      */
-    function safeBatchTransferFrom(
+    function safeBatchTransferFrom( // batch transfer krny ka function
         address from,
         address to,
         uint256[] memory ids,
@@ -251,7 +251,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI{
      * this function emits no events.
      */
     function _setURI(string memory newuri) internal virtual {
-        _uri = newuri;
+        _uri = newuri; 
     }
 
     /**
@@ -487,7 +487,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI{
         }
     }
 
-    function _doSafeBatchTransferAcceptanceCheck(
+    function _doSafeBatchTransferAcceptanceCheck( //agr batch transfer ho rha hai tou yh func chly ga
         address operator,
         address from,
         address to,
