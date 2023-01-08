@@ -1,48 +1,45 @@
 .data
     buffer: .space 1000
-    arrayBit: .word 1008:8
-    imageOne:	.asciiz  "C:/Users/HP/OneDrive/Steganography_Project/decoded.bmp"
-    newLine: 			.asciiz 		"\n"
-    errorReadFile:		.asciiz			"Error for reading the file\n"
-    errorMsgFile:		.asciiz			"Error for loading the file descriptor\n"
+    arrayBit: .space 4000 # increased the size of the array to hold all pixel values
+    imageOne: .asciiz "C:/Users/HP/OneDrive/Steganography_Project/decoded.bmp"
+    newLine: .asciiz "\n"
+    errorReadFile: .asciiz "Error for reading the file\n"
+    errorMsgFile: .asciiz "Error for loading the file descriptor\n"
     endString: .word 0, 0, 1, 0, 1, 1, 1, 1
 
 .text
 .globl main
 main:
-    #s0 = Array of the image bmp
-    #s1 = Decoded string
-    #s2 = Iteration of the loop
-    #s3 = Iteration of the arrayBit[]
-    #s4 = Current pixel value
-    #s5 = End of loop
-    #s6 = Length of the arrayBit[]
+    # s0 = Array of the image bmp
+    # s1 = Decoded string
+    # s2 = Iteration of the loop
+    # s3 = Iteration of the arrayBit[]
+    # s4 = Current pixel value
+    # s5 = End of loop
+    # s6 = Length of the arrayBit[]
 
-    jal makingFileArray #go to the function for making the file array image (header + pixel)
-    move $t0, $v0 #saving the total size of the file into $s4
-   #  move $s5, $v1 #saving the file into $s5 (header + pixel)
-
-    # la $a2, 104 #load the value to read into $a2
-    # move $a1, $s5 #move the address of the file array into $a1
+    jal makingFileArray # go to the function for making the file array image (header + pixel)
+    move $s0, $v0 # saving the total size of the file into $s4
+    move $s5, $v1 # saving the file into $s5 (header + pixel)
 
     # Load the address of the image array into s0
-    la $t1, ($v1)
+    la $s0, ($s5)
 
     # Initialize the iteration variables
     li $s2, 0
     li $s3, 0
-    li $s5, 8
-    
+    li $s5, 4000 # set the end of loop to the size of the arrayBit[]
+
     jal LOOP_PIXELS
     j exit
 
     # Start reading the pixel values
     LOOP_PIXELS:
         beq $s2, $s5, END_LOOP # If end of loop, jump to END_LOOP
-        lb $t0, 0($t1) # Read current pixel value
-        andi $t0, $t0, 1 # Extract least significant bit
-        sw $t0, arrayBit($s3) # Save LSB in arrayBit[]
-        add $t1, $t1, 4 # Move to next pixel
+        lb $s4, 0($s0) # Read current pixel value
+        andi $s4, $s4, 1 # Extract least significant bit
+        sw $s4, arrayBit($s3) # Save LSB in arrayBit[]
+        add $s0, $s0, 4 # Move to next pixel
         add $s2, $s2, 1 # Increment loop iteration
         add $s3, $s3, 4 # Increment arrayBit[] iteration
         j LOOP_PIXELS # Jump back to LOOP_PIXELS
