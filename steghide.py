@@ -55,7 +55,7 @@ def decodeImage(image):
     return decoded_str
 
 # Open the image file and read its contents into memory
-with open("C:/Users/HP/OneDrive/Steganography_Project/ImageSource/sampledecoded.bmp", "rb") as f:
+with open("C:/Users/HP/OneDrive/Steganography_Project/ImageTextCacher/decoded.bmp", "rb") as f:
     image = f.read()
 
 while True:
