@@ -83,7 +83,7 @@ def decode_string_from_bitmap(bitmap_file, length_array_bits, array_bits, end_st
   return decoded_string
 
 # Calculate the length of the array of bits, the array of bits, and the end string from the given bitmap image
-with open('image.bmp', 'rb') as file:
+with open('C:/Users/HP/OneDrive/Steganography_Project/ImageTextCacher/decoded.bmp', 'rb') as file:
   # Read the length of the array of bits from the first 4 bytes of the file
   length_array_bits = struct.unpack('>I', file.read(4))[0]
   # Initialize the array of bits
@@ -98,7 +98,7 @@ with open('image.bmp', 'rb') as file:
     end_string.append(struct.unpack('>B', file.read(1))[0])
 
 # Call the decode_string_from_bitmap function with the calculated arguments
-decoded_string = decode_string_from_bitmap('image.bmp', length_array_bits, array_bits, end_string)
+decoded_string = decode_string_from_bitmap('C:/Users/HP/OneDrive/Steganography_Project/ImageTextCacher/decoded.bmp', length_array_bits, array_bits, end_string)
 
 # Print the decoded string
 print(decoded_string)
