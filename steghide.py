@@ -2,7 +2,7 @@ def encodeImage(image, string_to_encode):
     # Convert the image to a list of characters
     image = list(image)
 
-    # Initialize the encoded string and the current index
+    # Initialize encoded string and the current index
     encoded_str = ""
     idx = 0
 
