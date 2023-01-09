@@ -3,7 +3,7 @@ def encodeImage(image, string_to_encode):
     image = list(image)
 
     # Initialize the encoded string and the current index
-    encoded_str = ""
+    encoded_str = "ss"
     idx = 0
 
     # Iterate through the string and encode it in the pixel data
