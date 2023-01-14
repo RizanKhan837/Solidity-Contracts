@@ -66,7 +66,7 @@ decode:
         addi $a0, $a0, 4
         # Jump back to the beginning of the loop to process the next pixel
         j loop
-    # End of loop
+    # End
     end_loop:
         # null-terminate the string
         sb $zero, 0($a1)
