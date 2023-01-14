@@ -44,7 +44,7 @@ li $v0, 4
 la $a0, string_buf
 syscall
 
-# Exit the program
+# Exit
 li $v0, 10
 syscall
 
