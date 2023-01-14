@@ -50,7 +50,7 @@ syscall
 
 # Decode function
 decode:
-    # Loop through each pixel of the
+    # Loop through each pixel of the image
     loop:
         # Load the value of the current pixel into $t0
         lw $t0, 0($a0)
