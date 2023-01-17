@@ -24,4 +24,4 @@ def decode_string_from_image(image):
         j += 1
     return result
 
-print(decode_string_from_image("C:/Users/HP/OneDrive/Steganography_Project/ImageSource/decodess.bmp"))
+print(decode_string_from_image("C:/Users/HP/OneDrive/Steganography_Project/ImageSource/decodesss.bmp"))

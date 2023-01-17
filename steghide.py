@@ -13,4 +13,4 @@ def decode_string_from_image(image):
 
     return result # result is the decoded string
 
-print(decode_string_from_image("C:/Users/HP/OneDrive/Steganography_Project/decoded.bmp"))
+print(decode_string_from_image("C:/Users/HP/OneDrive/Steganography_Project/ImageSource/decodesss.bmp"))
