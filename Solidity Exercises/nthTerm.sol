@@ -2,7 +2,8 @@
 
 pragma solidity ^0.8.7;
 
-contract nthTerm{
+// calculate the nth term of the sequence a, b, c, a + b + c, a + 2b + 3c, 2a + 3b + 5c, ...
+contract NthTerm{
  
     function nthTerm(uint _n, uint a, uint b, uint c) public pure returns(uint){
         // (1, 2, 3 , ... n)
