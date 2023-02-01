@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED 
 pragma solidity ^0.8.12;
 
+// return the state variable and the local variable
 contract LocalVar{
     uint256 num = 10;  // 2**256
     function returnStateVariable() public view returns(uint){
