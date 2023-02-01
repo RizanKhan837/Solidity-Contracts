@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED 
 pragma solidity ^0.8.12;
 
+// calculate the difference between the maximum and minimum of two numbers
 contract Difference{
     function max(int a, int b)public pure returns (int) {
         return a >= b ? a : b;    
