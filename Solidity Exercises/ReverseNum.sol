@@ -2,6 +2,7 @@
 
 pragma solidity >=0.4.22 <0.9.0;
 
+// reverse a number
 contract ReverseNum{
 
     function Reverse(uint num) public pure returns(uint){
